@@ -1,0 +1,13 @@
+{
+  "name": "empReactBase",
+  "remotes": {
+    "@emp/react-project": "empReactProject"
+  },
+  "exposes": {
+    "./configs/index": "src/configs/index",
+    "./components/Demo": "src/components/Demo",
+    "./components/Hello": "src/components/Hello"
+  },
+  "shared": {
+  }
+}

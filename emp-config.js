@@ -2,7 +2,7 @@ const path = require('path')
 const packagePath = path.join(path.resolve('./'), 'package.json')
 const {dependencies} = require(packagePath)
 console.log(packagePath)
-
+const empConfig = require(`${resolveApp('')}/emp.json`);
 module.exports = ({config, env}) => {
   const port = 8001
   const projectName = 'empReactBase'
@@ -16,25 +16,11 @@ module.exports = ({config, env}) => {
     args[0] = {
       ...args[0],
       ...{
-        // 项目名称
-        name: projectName,
+        ...empConfig,
         // 暴露项目的全局变量名
-        library: {type: 'var', name: projectName},
+        library: {type: 'var', name: empConfig.name},
         // 被远程引入的文件名
         filename: 'emp.js',
-        remotes: {
-          // 远程项目别名:远程引入的项目名
-          '@emp/react-project': 'empReactProject',
-        },
-        // 需要暴露的东西
-        exposes: {
-          // 别名:组件的路径
-          './configs/index': 'src/configs/index',
-          './components/Demo': 'src/components/Demo',
-          './components/Hello': 'src/components/Hello',
-        },
-        // 需要共享的依赖
-        shared: {...dependencies},
       },
     }
     return args
