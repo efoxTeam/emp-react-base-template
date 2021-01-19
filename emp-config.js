@@ -1,8 +1,6 @@
 const path = require('path')
 const packagePath = path.join(path.resolve('./'), 'package.json')
 const {dependencies} = require(packagePath)
-console.log(packagePath)
-const empConfig = require(`${resolveApp('')}/emp.json`)
 module.exports = ({config, env}) => {
   const port = 8001
   const projectName = 'empReactBase'
@@ -14,11 +12,19 @@ module.exports = ({config, env}) => {
   config.plugin('mf').tap(args => {
     args[0] = {
       ...args[0],
-      ...{
-        ...empConfig,
+        name: "empReactBase",
+        remotes: {
+          "@emp/react-project": "empReactProject@http://localhost:8002/emp.js"
+        },
+        exposes: {
+          "./configs/index": "src/configs/index",
+          "./components/Demo": "src/components/Demo",
+          "./components/Hello": "src/components/Hello"
+        },
+        shared: {
+        },
         // 被远程引入的文件名
         filename: 'emp.js',
-      },
     }
     return args
   })
